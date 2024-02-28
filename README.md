@@ -1,4 +1,4 @@
-WebGL fractals
+WebGL Fractals
 ----------------
 
 
