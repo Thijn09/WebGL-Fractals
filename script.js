@@ -1,5 +1,4 @@
-import * as THREE from "https://esm.sh/three";
-import GUI from "https://esm.sh/lil-gui";
+var GUI = lil.GUI;
 
 const gui = new GUI();
 
