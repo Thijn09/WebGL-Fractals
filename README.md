@@ -1,4 +1,4 @@
-##Fractal renderer
+#Fractal renderer
 
 A Pen by Thijn09 on CodePen.
 
