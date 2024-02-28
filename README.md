@@ -1,4 +1,4 @@
-Fractal renderer
+WebGL fractals
 ----------------
 
 
