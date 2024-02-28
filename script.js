@@ -150,8 +150,4 @@ function animate() {
 };
 
 addMesh();
-
-stats.begin()
-renderer.render(scene, camera)
-stats.end()
 animate();
