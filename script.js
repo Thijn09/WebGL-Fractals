@@ -146,7 +146,12 @@ function animate() {
   meshGeometry.scale.y = window.innerHeight;
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.render( scene, camera );
+  stats.update();
 };
 
 addMesh();
+
+stats.begin()
+renderer.render(scene, camera)
+stats.end()
 animate();
