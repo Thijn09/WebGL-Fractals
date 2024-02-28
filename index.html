@@ -1,151 +1,153 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body>
-<script id="vertex-shader" type="x-shader/x-vertex">
-  varying vec4 vPos;
-
-  void main() {
-
-    vPos = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-    gl_Position = vPos;
-
-	}
-</script>
-
-
-<script id="fragment-shader" type="x-shader/x-vertex">    
-  varying highp vec4 vPos;
-  uniform highp vec2 resolution;
-  uniform highp float u_scale;
-  uniform highp vec2 u_offset;
-  uniform highp vec2 u_mouse;
-  uniform highp vec3 u_color;
-  
-  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
-    return (value - old.x) / (old.y - old.x) * (new.y - new.x) + new.x;
-  }
-  
-  vec3 hsv2rgb(vec3 c)
-  {
-      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-  }
-  
-  highp vec2 multiplyComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x * n2.x - n1.y * n2.y;
-    highp float imag = n1.y * n2.x + n1.x * n2.y;
-    return vec2(real, imag);
-  }
-  
-  highp vec2 devideComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
-    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
-    return vec2(real, imag);
-  }
-  
-  highp vec2 addComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x + n2.x;
-    highp float imag = n1.y + n2.y;
-    return vec2(real, imag);
-  }
-  
-  highp vec2 subtractComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x - n2.x;
-    highp float imag = n1.y - n2.y;
-    return vec2(real, imag);
-  }
-  
-  void main() {
-  	highp vec2 vCoords = vPos.xy;
-		vCoords /= vPos.w;
-    highp vec2 c = vec2(0.0, 0.0);
-    highp vec2 z = vec2(0.0, 0.0);
-    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) * u_scale + u_offset);
-    c = vCoords;
-    highp vec2 pos = vec2(0.0,0.0);
-    int iteration = 0;
-    for (int i = 0; i <= 1000; i++) {
-      if (z.x*z.x + z.y*z.y > 4.0) {
-        iteration = i;
-        break;
-      }
-      z = EQUATION;
-    }
-    highp float r = float(iteration) / (48.0 * (1.0 - u_color.r) + 16.0);
-    highp float g = float(iteration) / (48.0 * (1.0 - u_color.g) + 16.0);
-    highp float b = float(iteration) / (48.0 * (1.0 - u_color.b) + 16.0);
-    gl_FragColor = vec4( r, g, b, 1.0 );
-  }
-</script>
-
-<script id="fragment-shader-julia" type="x-shader/x-vertex">    
-  varying highp vec4 vPos;
-  uniform highp vec2 resolution;
-  uniform highp float u_scale;
-  uniform highp vec2 u_offset;
-  uniform highp vec2 u_mouse;
-  uniform highp vec3 u_color;
-  
-  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
-    return (value - old.x) / (old.y - old.x) * (new.y - new.x) + new.x;
-  }
-  
-  vec3 hsv2rgb(vec3 c)
-  {
-      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-  }
-  
-  highp vec2 multiplyComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x * n2.x - n1.y * n2.y;
-    highp float imag = n1.y * n2.x + n1.x * n2.y;
-    return vec2(real, imag);
-  }
-  
-  highp vec2 devideComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
-    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
-    return vec2(real, imag);
-  }
-  
-  highp vec2 addComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x + n2.x;
-    highp float imag = n1.y + n2.y;
-    return vec2(real, imag);
-  }
-  
-  highp vec2 subtractComplex(highp vec2 n1, highp vec2 n2) {
-    highp float real = n1.x - n2.x;
-    highp float imag = n1.y - n2.y;
-    return vec2(real, imag);
-  }
-  
-  void main() {
-  	highp vec2 vCoords = vPos.xy;
-		vCoords /= vPos.w;
-    highp vec2 c = vec2(0.0, 0.0);
-    highp vec2 z = vec2(0.0, 0.0);
-    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) );
-    c = u_mouse;
-    z = vCoords;
-    highp vec2 pos = vec2(0.0,0.0);
-    int iteration = 0;
-    for (int i = 0; i <= 1000; i++) {
-      if (z.x*z.x + z.y*z.y > 4.0) {
-        iteration = i;
-        break;
-      }
-      z = EQUATION;
-    }
-    highp float r = float(iteration) / (48.0 * (1.0 - u_color.r) + 16.0);
-    highp float g = float(iteration) / (48.0 * (1.0 - u_color.g) + 16.0);
-    highp float b = float(iteration) / (48.0 * (1.0 - u_color.b) + 16.0);
-    gl_FragColor = vec4( r, g, b, 1.0 );
-  }
-</script>
-</body>
+	<head>
+		<style src="style.css"></style>
+	</head>
+	<body>
+		<script id="vertex-shader" type="x-shader/x-vertex">
+		  varying vec4 vPos;
+		
+		  void main() {
+		
+		    vPos = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+		    gl_Position = vPos;
+		
+			}
+		</script>
+		
+		
+		<script id="fragment-shader" type="x-shader/x-vertex">    
+		  varying highp vec4 vPos;
+		  uniform highp vec2 resolution;
+		  uniform highp float u_scale;
+		  uniform highp vec2 u_offset;
+		  uniform highp vec2 u_mouse;
+		  uniform highp vec3 u_color;
+		  
+		  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
+		    return (value - old.x) / (old.y - old.x) * (new.y - new.x) + new.x;
+		  }
+		  
+		  vec3 hsv2rgb(vec3 c)
+		  {
+		      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+		  }
+		  
+		  highp vec2 multiplyComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x * n2.x - n1.y * n2.y;
+		    highp float imag = n1.y * n2.x + n1.x * n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 devideComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
+		    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 addComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x + n2.x;
+		    highp float imag = n1.y + n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 subtractComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x - n2.x;
+		    highp float imag = n1.y - n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  void main() {
+		  	highp vec2 vCoords = vPos.xy;
+				vCoords /= vPos.w;
+		    highp vec2 c = vec2(0.0, 0.0);
+		    highp vec2 z = vec2(0.0, 0.0);
+		    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) * u_scale + u_offset);
+		    c = vCoords;
+		    highp vec2 pos = vec2(0.0,0.0);
+		    int iteration = 0;
+		    for (int i = 0; i <= 1000; i++) {
+		      if (z.x*z.x + z.y*z.y > 4.0) {
+		        iteration = i;
+		        break;
+		      }
+		      z = EQUATION;
+		    }
+		    highp float r = float(iteration) / (48.0 * (1.0 - u_color.r) + 16.0);
+		    highp float g = float(iteration) / (48.0 * (1.0 - u_color.g) + 16.0);
+		    highp float b = float(iteration) / (48.0 * (1.0 - u_color.b) + 16.0);
+		    gl_FragColor = vec4( r, g, b, 1.0 );
+		  }
+		</script>
+		
+		<script id="fragment-shader-julia" type="x-shader/x-vertex">    
+		  varying highp vec4 vPos;
+		  uniform highp vec2 resolution;
+		  uniform highp float u_scale;
+		  uniform highp vec2 u_offset;
+		  uniform highp vec2 u_mouse;
+		  uniform highp vec3 u_color;
+		  
+		  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
+		    return (value - old.x) / (old.y - old.x) * (new.y - new.x) + new.x;
+		  }
+		  
+		  vec3 hsv2rgb(vec3 c)
+		  {
+		      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+		      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+		      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+		  }
+		  
+		  highp vec2 multiplyComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x * n2.x - n1.y * n2.y;
+		    highp float imag = n1.y * n2.x + n1.x * n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 devideComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
+		    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 addComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x + n2.x;
+		    highp float imag = n1.y + n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  highp vec2 subtractComplex(highp vec2 n1, highp vec2 n2) {
+		    highp float real = n1.x - n2.x;
+		    highp float imag = n1.y - n2.y;
+		    return vec2(real, imag);
+		  }
+		  
+		  void main() {
+		  	highp vec2 vCoords = vPos.xy;
+				vCoords /= vPos.w;
+		    highp vec2 c = vec2(0.0, 0.0);
+		    highp vec2 z = vec2(0.0, 0.0);
+		    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) );
+		    c = u_mouse;
+		    z = vCoords;
+		    highp vec2 pos = vec2(0.0,0.0);
+		    int iteration = 0;
+		    for (int i = 0; i <= 1000; i++) {
+		      if (z.x*z.x + z.y*z.y > 4.0) {
+		        iteration = i;
+		        break;
+		      }
+		      z = EQUATION;
+		    }
+		    highp float r = float(iteration) / (48.0 * (1.0 - u_color.r) + 16.0);
+		    highp float g = float(iteration) / (48.0 * (1.0 - u_color.g) + 16.0);
+		    highp float b = float(iteration) / (48.0 * (1.0 - u_color.b) + 16.0);
+		    gl_FragColor = vec4( r, g, b, 1.0 );
+		  }
+		</script>
+		<script src="script.js"></script>
+	</body>
 </html>
