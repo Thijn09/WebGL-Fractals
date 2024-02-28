@@ -14,8 +14,14 @@
 		
 			}
 		</script>
-		
-		
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
 		<script id="fragment-shader" type="x-shader/x-vertex">    
 		  varying highp vec4 vPos;
 		  uniform highp vec2 resolution;
@@ -148,6 +154,6 @@
 		    gl_FragColor = vec4( r, g, b, 1.0 );
 		  }
 		</script>
-		<script src="script.js"></script>
+		<script type="module" src="script.js"></script>
 	</body>
 </html>
