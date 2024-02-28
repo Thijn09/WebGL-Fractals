@@ -1,10 +1,7 @@
 var GUI = lil.GUI;
 
-const stats = new Stats();
 const gui = new GUI();
 
-stats.showPanel(1) // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stats.dom)
 
 const options = {
   isJulia: true,
@@ -146,7 +143,6 @@ function animate() {
   meshGeometry.scale.y = window.innerHeight;
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.render( scene, camera );
-  stats.update();
 };
 
 addMesh();
