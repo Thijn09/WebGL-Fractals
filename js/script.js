@@ -96,8 +96,8 @@ function addMesh() {
       u_mouse: { value: new THREE.Vector2(mouseX, mouseY) },
       u_color: {
         value: new THREE.Vector3(
-          options.color.r,
-          options.color.g,
+          options.color.r / 255,
+          options.color.g / 255,
           options.color.b
         )
       }
@@ -185,8 +185,8 @@ function updateMaterial() {
     mouseY
   );
   meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
-    options.color.r,
-    options.color.g,
+    options.color.r / 255,
+    options.color.g / 255,
     options.color.b
   );
   if (options.isJulia) {
