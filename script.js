@@ -12,11 +12,21 @@ const options = {
   }
 };
 
-/*
 gui.add(options, "isJulia");
 gui.add(options, "equation");
 gui.addColor(options, "color");
-*/
+
+gui.hide();
+
+window.onkeydown = (e) => {
+  if (e.code === "KeyC") {
+    if (gui._hidden) {
+      gui.show();
+    } else {
+      gui.hide();
+    }
+  }
+};
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ antialias: true });
