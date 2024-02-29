@@ -25,15 +25,23 @@ window.onkeydown = (e) => {
 };
 
 function livelyPropertyListener(name, val) {
-  if (name === "isjulia") {
-    options.isJulia = val;
+  switch (name) {
+    case "isjulia":
+      options.isJulia = val;
+      break;
+    case "equation":
+      options.equation = val;
+      break;
+    case "color":
+      options.color = hexToRgb(val);
+      meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
+        options.color.r,
+        options.color.g,
+        options.color.b
+      );
+      break;
   }
-  if (name === "equation") {
-    options.equation = val;
-  }
-  if (name === "color") {
-    options.color = hexToRgb(val);
-  }
+  
 }
 
 // source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
