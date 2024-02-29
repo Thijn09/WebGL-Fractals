@@ -20,11 +20,7 @@ gui.hide();
 
 window.onkeydown = (e) => {
   if (e.code === "KeyC") {
-    if (gui._hidden) {
-      gui.show();
-    } else {
-      gui.hide();
-    }
+    gui.toggleHide();
   }
 };
 
