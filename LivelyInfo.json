@@ -1,17 +1,14 @@
 {
   "AppVersion": "1.0.0.0",
   "Title": "Fractals",
-  "Thumbnail": "thumbnail.png",
-  "Preview": null,
+  "Thumbnail": "thumbnail.jpg",
+  "Preview": "preview.gif",
   "Desc": null,
   "Author": "Thijn Gutter",
   "License": null,
   "Contact": "https://thijn09.github.io/WebGL-Fractals/",
-  "Type": 3,
+  "Type": 1,
   "FileName": "index.html",
   "Arguments": "",
-  "IsAbsolutePath": true,
-  "Id": null,
-  "Tags": null,
-  "Version": 0
+  "IsAbsolutePath": false,
 }
