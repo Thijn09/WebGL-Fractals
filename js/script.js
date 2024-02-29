@@ -35,9 +35,9 @@ function livelyPropertyListener(name, val) {
     case "color":
       options.color = hexToRgb(val);
       meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
-        options.color.r,
-        options.color.g,
-        options.color.b
+        options.color.r / 255,
+        options.color.g / 255,
+        options.color.b / 255
       );
       break;
   }
