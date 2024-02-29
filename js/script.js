@@ -6,9 +6,9 @@ let options = {
   isJulia: true,
   equation: "addComplex(multiplyComplex(z, z), c)",
   color: {
-    r: 1.0,
-    g: 0.0,
-    b: 1.0
+    r: 255,
+    g: 0,
+    b: 255
   }
 };
 
@@ -35,9 +35,9 @@ function livelyPropertyListener(name, val) {
     case "color":
       options.color = hexToRgb(val);
       meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
-        options.color.r / 255,
-        options.color.g / 255,
-        options.color.b / 255
+        options.color.r,
+        options.color.g,
+        options.color.b
       );
       break;
   }
