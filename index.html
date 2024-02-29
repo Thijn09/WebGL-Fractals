@@ -37,7 +37,6 @@
 		  uniform highp vec2 resolution;
 		  uniform highp float u_scale;
 		  uniform highp vec2 u_offset;
-		  uniform highp vec2 u_mouse;
 		  uniform highp vec3 u_color;
 		  
 		  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
@@ -80,7 +79,7 @@
 				vCoords /= vPos.w;
 		    highp vec2 c = vec2(0.0, 0.0);
 		    highp vec2 z = vec2(0.0, 0.0);
-		    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) * u_scale + u_offset);
+		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * u_scale + u_offset;
 		    c = vCoords;
 		    highp vec2 pos = vec2(0.0,0.0);
 		    int iteration = 0;
@@ -101,8 +100,6 @@
 		<script id="fragment-shader-julia" type="x-shader/x-vertex">    
 		  varying highp vec4 vPos;
 		  uniform highp vec2 resolution;
-		  uniform highp float u_scale;
-		  uniform highp vec2 u_offset;
 		  uniform highp vec2 u_mouse;
 		  uniform highp vec3 u_color;
 		  
@@ -146,7 +143,8 @@
 				vCoords /= vPos.w;
 		    highp vec2 c = vec2(0.0, 0.0);
 		    highp vec2 z = vec2(0.0, 0.0);
-		    vCoords = (vec2(vCoords.x * (resolution.x / resolution.y), (vCoords.y)) );
+        highp float scale = 1.4;
+		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * 1.4;
 		    c = u_mouse;
 		    z = vCoords;
 		    highp vec2 pos = vec2(0.0,0.0);
