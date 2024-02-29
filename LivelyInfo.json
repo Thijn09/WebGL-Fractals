@@ -2,7 +2,7 @@
   "AppVersion": "1.0.0.0",
   "Title": "Fractals",
   "Thumbnail": "thumbnail.jpg",
-  "Preview": "preview.gif",
+  "Preview": null,
   "Desc": null,
   "Author": "Thijn Gutter",
   "License": null,
