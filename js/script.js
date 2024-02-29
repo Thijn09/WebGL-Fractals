@@ -16,11 +16,11 @@ gui.add(options, "isJulia");
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
-gui.toggleHide();
+dat.GUI.toggleHide();
 
 window.onkeydown = (e) => {
   if (e.code === "KeyC") {
-    gui.toggleHide();
+    dat.GUI.toggleHide();
   }
 };
 
