@@ -1,4 +1,4 @@
-var GUI = lil.GUI;
+var GUI = dat.GUI;
 
 const gui = new GUI();
 
