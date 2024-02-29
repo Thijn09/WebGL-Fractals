@@ -34,11 +34,6 @@ function livelyPropertyListener(name, val) {
       break;
     case "color":
       options.color = hexToRgb(val);
-      meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
-        options.color.r,
-        options.color.g,
-        options.color.b
-      );
       break;
   }
   
@@ -98,7 +93,7 @@ function addMesh() {
         value: new THREE.Vector3(
           options.color.r / 255,
           options.color.g / 255,
-          options.color.b
+          options.color.b / 255
         )
       }
     },
@@ -187,7 +182,7 @@ function updateMaterial() {
   meshGeometry.material.uniforms.u_color.value = new THREE.Vector3(
     options.color.r / 255,
     options.color.g / 255,
-    options.color.b
+    options.color.b / 255
   );
   if (options.isJulia) {
     fragmentShader = document.getElementById("fragment-shader-julia").textContent;
