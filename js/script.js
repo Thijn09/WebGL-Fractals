@@ -16,7 +16,7 @@ gui.add(options, "isJulia");
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
-gui.hide();
+gui.toggleHide();
 
 window.onkeydown = (e) => {
   if (e.code === "KeyC") {
