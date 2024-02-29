@@ -2,7 +2,7 @@ var GUI = lil.GUI;
 
 const gui = new GUI();
 
-const options = {
+let options = {
   isJulia: true,
   equation: "addComplex(multiplyComplex(z, z), c)",
   color: {
@@ -27,6 +27,27 @@ window.onkeydown = (e) => {
     }
   }
 };
+
+function livelyPropertyListener(name, val) {
+  if (name === "isjulia") {
+    options.isJulia = val;
+  }
+  if (name === "equation") {
+    options.equation = val;
+  }
+  if (name === "color") {
+    options.color = hexToRgb(val);
+  }
+}
+
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ antialias: true });
