@@ -1,6 +1,7 @@
 WebGL Fractals
 ----------------
 Press C to see the controls panel.
+
 WebGL Fractals for Lively Wallpaper.
 
 
