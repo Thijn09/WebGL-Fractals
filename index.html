@@ -144,7 +144,7 @@
 		    highp vec2 c = vec2(0.0, 0.0);
 		    highp vec2 z = vec2(0.0, 0.0);
         highp float scale = 1.4;
-		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * 1.4;
+		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * scale;
 		    c = u_mouse;
 		    z = vCoords;
 		    highp vec2 pos = vec2(0.0,0.0);
