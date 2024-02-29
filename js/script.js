@@ -182,8 +182,7 @@ function updateMaterial() {
     options.color.b
   );
   if (options.isJulia) {
-    fragmentShader = document.getElementById("fragment-shader-julia")
-      .textContent;
+    fragmentShader = document.getElementById("fragment-shader-julia").textContent;
   } else {
     fragmentShader = document.getElementById("fragment-shader").textContent;
   }
