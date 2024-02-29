@@ -1,0 +1,17 @@
+{
+  "isJulia": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Julia Set"
+  },
+  "equation": {
+    "type": "textbox",
+    "value": "addComplex(multiplyComplex(z, z), c)",
+    "text": "Equation"
+  },
+  "Color": {
+    "type": "color",
+    "value": "#ff00ff",
+    "text": "Color"
+  }
+}
