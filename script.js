@@ -12,9 +12,11 @@ const options = {
   }
 };
 
+/*
 gui.add(options, "isJulia");
 gui.add(options, "equation");
 gui.addColor(options, "color");
+*/
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ antialias: true });
