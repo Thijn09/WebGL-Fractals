@@ -176,6 +176,7 @@ function updateMaterial() {
     options.color.g / 255,
     options.color.b / 255
   );
+  meshGeometry.material.defines.EQUATION = options.equation;
   if (options.isJulia) {
     fragmentShader = document.getElementById("fragment-shader-julia").textContent;
   } else {
