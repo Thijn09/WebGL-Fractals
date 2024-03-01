@@ -16,14 +16,6 @@ gui.add(options, "isJulia");
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
-dat.GUI.toggleHide();
-
-window.onkeydown = (e) => {
-  if (e.code === "KeyC") {
-    dat.GUI.toggleHide();
-  }
-};
-
 function livelyPropertyListener(name, val) {
   switch (name) {
     case "isjulia":
