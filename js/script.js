@@ -3,7 +3,7 @@ var GUI = dat.GUI;
 const gui = new GUI();
 
 let options = {
-  isJulia: true,
+  mode: "Julia",
   equation: "addComplex(multiplyComplex(z, z), c)",
   color: {
     r: 255,
@@ -12,14 +12,14 @@ let options = {
   }
 };
 
-gui.add(options, "isJulia");
+gui.add(options, "mode", ["Julia", "Mandelbrot"]);
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
 function livelyPropertyListener(name, val) {
   switch (name) {
-    case "isjulia":
-      options.isJulia = val;
+    case "mode":
+      options.mode = val;
       break;
     case "equation":
       options.equation = val;
@@ -62,7 +62,7 @@ let fragmentShader = "";
 
 function addMesh() {
   const vertexShader = document.getElementById("vertex-shader").textContent;
-  if (options.isJulia) {
+  if (options.mode === "Julia") {
     fragmentShader = document.getElementById("fragment-shader-julia")
       .textContent;
   } else {
@@ -142,7 +142,7 @@ let currentMouseX = mouseX;
 let currentMouseY = mouseY;
 
 function controls() {
-  if (options.isJulia) {
+  if (options.mode === "Julia") {
     document.body.style.cursor = "default";
   }
   currentMouseX = mouseX;
@@ -177,7 +177,7 @@ function updateMaterial() {
     options.color.b / 255
   );
   meshGeometry.material.defines.EQUATION = options.equation;
-  if (options.isJulia) {
+  if (options.mode === "Julia") {
     fragmentShader = document.getElementById("fragment-shader-julia").textContent;
   } else {
     fragmentShader = document.getElementById("fragment-shader").textContent;
