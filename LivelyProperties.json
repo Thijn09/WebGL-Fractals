@@ -1,8 +1,12 @@
 {
-  "isjulia": {
-    "type": "checkbox",
-    "value": true,
-    "text": "Julia Set"
+  "mode": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Mode",
+    "items": [
+      "Julia",
+      "Mandelbrot"
+    ]
   },
   "equation": {
     "type": "textbox",
