@@ -1,6 +1,6 @@
 # WebGL Fractals
 
-Press C to see the controls panel.
+Hover your mouse in the top right to see the control panel.
 
 ## How it works
 ### Julia set
