@@ -16,20 +16,6 @@ gui.add(options, "mode", ["Julia", "Mandelbrot"]);
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
-function livelyPropertyListener(name, val) {
-  switch (name) {
-    case "mode":
-      options.mode = val;
-      break;
-    case "equation":
-      options.equation = val;
-      break;
-    case "color":
-      options.color = hexToRgb(val);
-      break;
-  }
-  
-}
 
 // source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 function hexToRgb(hex) {
