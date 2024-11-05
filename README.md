@@ -1,1 +1,1 @@
-# WebGL-Fractals
+# WebGL Fractals
