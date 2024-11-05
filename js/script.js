@@ -25,6 +25,13 @@ function hexToRgb(hex) {
   } : null;
 }
 
+function parseEquation( equation ) {
+  let tokens = /\w+(?:'\w+)?|[^\w\s]/g.exec(equation);
+  for (let pointerIndex = 0; pointerIndex < equation.length; pointerIndex++) {
+  }
+  newEquation
+}
+
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -69,7 +76,7 @@ function addMesh() {
       }
     },
     defines: {
-      EQUATION: options.equation
+      EQUATION: parseEquation(options.equation)
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader
