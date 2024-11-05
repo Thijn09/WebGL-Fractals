@@ -3,8 +3,7 @@ var GUI = dat.GUI;
 const gui = new GUI();
 
 let options = {
-  mode: "Julia",
-  equation: "addComplex(multiplyComplex(z, z), c)",
+  equation: "addComplex(multiplyComplex(z, z), u_mouse)",
   color: {
     r: 255,
     g: 0,
@@ -12,7 +11,6 @@ let options = {
   }
 };
 
-gui.add(options, "mode", ["Julia", "Mandelbrot"]);
 gui.add(options, "equation");
 gui.addColor(options, "color");
 
@@ -44,16 +42,11 @@ const camera = new THREE.OrthographicCamera(
 camera.position.z = 75;
 //controls.update();
 let meshGeometry = null;
-let fragmentShader = "";
 
 function addMesh() {
   const vertexShader = document.getElementById("vertex-shader").textContent;
-  if (options.mode === "Julia") {
-    fragmentShader = document.getElementById("fragment-shader-julia")
-      .textContent;
-  } else {
-    fragmentShader = document.getElementById("fragment-shader").textContent;
-  }
+  const fragmentShader = document.getElementById("fragment-shader").textContent;
+  
   const bufferGeometry = new THREE.PlaneGeometry(
     window.innerWidth,
     window.innerHeight
