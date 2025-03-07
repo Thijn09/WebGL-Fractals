@@ -32,8 +32,8 @@
 	  opacity: 1;
 	}
     </style>
-		<script src="js/dat.gui.min.js"></script>
-		<script src="js/three.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three/build/three.js"></script>
 	</head>
 	<body>
 		<script id="vertex-shader" type="x-shader/x-vertex">
@@ -51,50 +51,136 @@
 		  uniform highp vec2 resolution;
 		  uniform highp vec2 u_mouse;
 		  uniform highp vec3 u_color;
+		  uniform highp float u_scale;
+		  uniform highp vec2 u_offset;
 		  
 		  highp float scale(highp float value, highp vec2 old, highp vec2 new) {
 		    return (value - old.x) / (old.y - old.x) * (new.y - new.x) + new.x;
 		  }
 		  
-		  vec3 hsv2rgb(vec3 c)
-		  {
-		      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-		      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-		      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+		  vec3 hsv2rgb(vec3 c) {
+		    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+			vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+	    	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 		  }
 		  
-		  highp vec2 multiplyComplex(highp vec2 n1, highp vec2 n2) {
+		  highp vec2 multiply(highp vec2 n1, highp vec2 n2) {
 		    highp float real = n1.x * n2.x - n1.y * n2.y;
 		    highp float imag = n1.y * n2.x + n1.x * n2.y;
 		    return vec2(real, imag);
 		  }
 		  
-		  highp vec2 devideComplex(highp vec2 n1, highp vec2 n2) {
+		  highp vec2 devide(highp vec2 n1, highp vec2 n2) {
 		    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
 		    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
 		    return vec2(real, imag);
 		  }
 		  
-		  highp vec2 addComplex(highp vec2 n1, highp vec2 n2) {
+		  highp vec2 add(highp vec2 n1, highp vec2 n2) {
 		    highp float real = n1.x + n2.x;
 		    highp float imag = n1.y + n2.y;
 		    return vec2(real, imag);
 		  }
 		  
-		  highp vec2 subtractComplex(highp vec2 n1, highp vec2 n2) {
+		  highp vec2 subtract(highp vec2 n1, highp vec2 n2) {
 		    highp float real = n1.x - n2.x;
 		    highp float imag = n1.y - n2.y;
 		    return vec2(real, imag);
 		  }
+
+		  highp vec2 power(highp vec2 z, highp float n) {
+			if (z.x == 0.0 && z.y == 0.0) {
+				if (n > 0.0) return vec2(0.0, 0.0);
+				if (n == 0.0) return vec2(1.0, 0.0);
+				return vec2(1e20, 1e20);
+			}
+			highp float r = length(z);
+			highp float theta = atan(z.y, z.x);
+			highp float r_n = pow(r, n);
+			return vec2(r_n * cos(n * theta), r_n * sin(n * theta));
+		  }
+		
+		  highp vec2 squareroot(highp vec2 z) {
+			highp float r = length(z);
+			highp float theta = atan(z.y, z.x);
+			highp float sqrt_r = sqrt(r); 
+			return vec2(sqrt_r * cos(theta / 2.0), sqrt_r * sin(theta / 2.0));
+		  }
+
+		  highp float absolute(highp vec2 z) { 
+			return length(z);
+		  }
+
 		  
+		  highp float multiply(highp float n1, highp float n2) {
+		    return n1 * n2;
+		  }
+		  
+		  highp float devide(highp float n1, highp float n2) {
+		    return n1 / n2;
+		  }
+		  
+		  highp float add(highp float n1, highp float n2) {
+		    return n1 + n2;
+		  }
+		  
+		  highp float subtract(highp float n1, highp float n2) {
+		    return n1 - n2;
+		  }
+
+		  highp float power(highp float a, highp float n) {
+			return pow(a,n);
+		  }
+		
+		  highp float squareroot(highp float a) {
+			return sqrt(a);
+		  }
+
+		  highp float absolute(highp float a) { 
+			return abs(a);
+		  }
+
+
+		  highp vec2 multiply(highp vec2 n1, highp float n2) {
+		    return vec2(n1.x * n2, n1.y);
+		  }
+		  
+		  highp vec2 devide(highp vec2 n1, highp float n2) {
+		    return vec2(n1.x / n2, n1.y);
+		  }
+		  
+		  highp vec2 add(highp vec2 n1, highp float n2) {
+		    return vec2(n1.x + n2, n1.y);
+		  }
+		  
+		  highp vec2 subtract(highp vec2 n1, highp float n2) {
+		    return vec2(n1.x - n2, n1.y);
+		  }
+
+		  highp vec2 complex(highp float a, highp float b) {
+			return vec2(a,b);
+		  }
+
+		  highp vec2 C(highp float a, highp float b) {
+			return complex(a,b);
+		  }
+
+		  highp float re(highp vec2 complex) {
+			return complex.x;
+		  }
+
+		  highp float im(highp vec2 complex) {
+			return complex.y;
+		  }
+		  
+		
 		  void main() {
 		  	highp vec2 vCoords = vPos.xy;
-				vCoords /= vPos.w;
-		    highp vec2 c = vec2(0.0, 0.0);
-		    highp vec2 z = vec2(0.0, 0.0);
-        highp float scale = 1.4;
-		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * scale;
-		    z = ZZERO;
+			vCoords /= vPos.w;
+        	highp float scale = u_scale;
+		    vCoords = vec2(vCoords.x * (resolution.x / resolution.y), vCoords.y) * scale + u_offset;
+			/*VARIABLES*/
+		    highp vec2 z = ZZERO;
 		    highp vec2 pos = vec2(0.0,0.0);
 		    int iteration = 0;
 		    for (int i = 0; i <= 400; i++) {
@@ -110,6 +196,6 @@
 		    gl_FragColor = vec4( r, g, b, 1.0 );
 		  }
 		</script>
-		<script type="module" src="js/script.js"></script>
+		<script src="js/script.js"></script>
 	</body>
 </html>
