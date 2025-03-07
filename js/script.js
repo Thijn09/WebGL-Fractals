@@ -4,7 +4,7 @@ const gui = new GUI();
 
 let options = {
   "z₀ =": "vCoords",
-  "zₙ =": "power(z,2.0) + u_mouse", //"addComplex(multiplyComplex(z, z), u_mouse)",
+  "zₙ₊₁ =": "power(z,2.0) + u_mouse", //"addComplex(multiplyComplex(z, z), u_mouse)",
   color: {
     r: 255,
     g: 0,
@@ -15,8 +15,8 @@ let options = {
 
 //let variables = [];
 const equationFolder = gui.addFolder("Equation");
-const zzeroController = equationFolder.add(options, "z₀ =");
-const equationController = equationFolder.add(options, "zₙ =");
+const zzeroController = equationFolder.add(options, "z₀ =").listen();
+const equationController = equationFolder.add(options, "zₙ₊₁ =").listen();
 /*equationFolder.add({"Add variable": function () {
   const variableName = prompt("Please enter the variable name:", "myVariable");
   if (!variableName.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
@@ -43,8 +43,30 @@ const equationController = equationFolder.add(options, "zₙ =");
     console.log(meshGeometry.material.defines.VARIABLES);
   });
 }}, "Add variable");*/
-const colorController = gui.addColor(options, "color");
-const modeController = gui.add(options, "moveable");
+const presetsFolder = gui.addFolder("Presets");
+presetsFolder.add({"Mandelbrot": function () {
+  options["z₀ ="] = "C(0.0, 0.0)";
+  options["zₙ₊₁ ="] = "power(z, 2.0) + vCoords";
+  options.moveable = true;
+  meshGeometry.material.defines.EQUATION = compileComplexExpression(options["zₙ₊₁ ="]);
+  meshGeometry.material.defines.ZZERO = compileComplexExpression(options["z₀ ="]);
+}},"Mandelbrot");
+presetsFolder.add({"Julia": function () {
+  options["z₀ ="] = "vCoords";
+  options["zₙ₊₁ ="] = "power(z, 2.0) + u_mouse";
+  options.moveable = false;
+  meshGeometry.material.defines.EQUATION = compileComplexExpression(options["zₙ₊₁ ="]);
+  meshGeometry.material.defines.ZZERO = compileComplexExpression(options["z₀ ="]);
+}},"Julia");
+presetsFolder.add({"Burning Ship": function () {
+  options["z₀ ="] = "C(0.0, 0.0)";
+  options["zₙ₊₁ ="] = "power(C(abs(re(z)), abs(im(z))), 2.0) + C(re(vCoords),0-im(vCoords))";
+  options.moveable = true;
+  meshGeometry.material.defines.EQUATION = compileComplexExpression(options["zₙ₊₁ ="]);
+  meshGeometry.material.defines.ZZERO = compileComplexExpression(options["z₀ ="]);
+}},"Burning Ship");
+const colorController = gui.addColor(options, "color").listen();
+const modeController = gui.add(options, "moveable").listen();
 
 // source: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 function hexToRgb(hex) {
@@ -207,7 +229,7 @@ function addMesh() {
       }
     },
     defines: {
-      EQUATION: compileComplexExpression(options["zₙ ="]),
+      EQUATION: compileComplexExpression(options["zₙ₊₁ ="]),
       ZZERO: compileComplexExpression(options["z₀ ="]),
       //VARIABLES: ""
     },
@@ -218,7 +240,7 @@ function addMesh() {
   meshGeometry = new THREE.Mesh(bufferGeometry, material);
 
   equationController.onChange(() => {
-    meshGeometry.material.defines.EQUATION = compileComplexExpression(options["zₙ ="]);
+    meshGeometry.material.defines.EQUATION = compileComplexExpression(options["zₙ₊₁ ="]);
     console.log(meshGeometry.material.defines.EQUATION);
   });
 
