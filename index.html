@@ -70,7 +70,7 @@
 		    return vec2(real, imag);
 		  }
 		  
-		  highp vec2 devide(highp vec2 n1, highp vec2 n2) {
+		  highp vec2 divide(highp vec2 n1, highp vec2 n2) {
 		    highp float real = (n1.x * n2.x + n1.y * n2.y) / (n2.x * n2.x + n2.y * n2.y);
 		    highp float imag = (n1.y * n2.x - n1.x * n2.y) / (n2.x * n2.x + n2.y * n2.y);
 		    return vec2(real, imag);
@@ -116,7 +116,7 @@
 		    return n1 * n2;
 		  }
 		  
-		  highp float devide(highp float n1, highp float n2) {
+		  highp float divide(highp float n1, highp float n2) {
 		    return n1 / n2;
 		  }
 		  
@@ -145,7 +145,7 @@
 		    return vec2(n1.x * n2, n1.y);
 		  }
 		  
-		  highp vec2 devide(highp vec2 n1, highp float n2) {
+		  highp vec2 divide(highp vec2 n1, highp float n2) {
 		    return vec2(n1.x / n2, n1.y);
 		  }
 		  
@@ -154,6 +154,22 @@
 		  }
 		  
 		  highp vec2 subtract(highp vec2 n1, highp float n2) {
+		    return vec2(n1.x - n2, n1.y);
+		  }
+
+		  highp vec2 multiply(highp float n2, highp vec2 n1) {
+		    return vec2(n1.x * n2, n1.y);
+		  }
+		  
+		  highp vec2 divide(highp float n2, highp vec2 n1) {
+		    return vec2(n1.x / n2, n1.y);
+		  }
+		  
+		  highp vec2 add(highp float n2, highp vec2 n1) {
+		    return vec2(n1.x + n2, n1.y);
+		  }
+		  
+		  highp vec2 subtract(highp float n2, highp vec2 n1) {
 		    return vec2(n1.x - n2, n1.y);
 		  }
 
